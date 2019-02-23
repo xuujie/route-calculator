@@ -14,8 +14,10 @@ public class RouteCalculatorApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        long start = System.currentTimeMillis();
         RouteCalculator routeCalculator = new RouteCalculator();
         routeCalculator.findRoute("Frankfurt", "Munchen", new RouteList());
         routeCalculator.printCorrectRouteList();
+        System.out.println("Cost: " + (System.currentTimeMillis() - start) + "ms");
     }
 }

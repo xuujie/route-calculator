@@ -6,6 +6,7 @@ public class Route {
     private String from;
     private String to;
     private int distance;
+    private boolean single;
 
     public Route(String from, String to, int distance) {
         this.from = from;
@@ -35,6 +36,14 @@ public class Route {
 
     public void setDistance(int distance) {
         this.distance = distance;
+    }
+
+    public boolean isSingle() {
+        return single;
+    }
+
+    public void setSingle(boolean single) {
+        this.single = single;
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RouteList {
+public class RouteList implements Comparable<RouteList> {
 
     private boolean live;
 
@@ -20,6 +20,14 @@ public class RouteList {
 
     public void removeRoute(Route route) {
         this.routes.remove(route);
+    }
+
+    public Route getLastRoute() {
+        if (routes.size() >= 1) {
+            return routes.get(routes.size() - 1);
+        } else {
+            return null;
+        }
     }
 
     public void removeLastRoute() {
@@ -84,5 +92,10 @@ public class RouteList {
 
     public List<String> getFroms() {
         return this.routes.stream().map(Route::getFrom).collect(Collectors.toList());
+    }
+
+    @Override
+    public int compareTo(RouteList o) {
+        return this.distance() - o.distance();
     }
 }
