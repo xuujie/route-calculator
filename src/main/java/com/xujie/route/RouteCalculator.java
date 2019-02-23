@@ -11,18 +11,16 @@ public class RouteCalculator {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private List<Route> reverseRoutes = new ArrayList<>();
+    private List<Route> deadRoutes = new ArrayList<>();
 
     private List<RouteList> correctRouteList = new ArrayList<>();
 
     public void findRoute(String from, String to, RouteList routeList) {
         List<Route> routes = getRoutes(from);
+        boolean singleRoute = routes.size() == 1;
 
-        if (routes.size() == 1) {
-            routes.get(0).setSingle(true);
-        }
-        routes.forEach(route -> reverseRoutes.add(getRoute(route.getTo(), route.getFrom())));
-        logger.debug("Reversed Routes: " + reverseRoutes);
+        //all reversed routes are dead routes
+        routes.forEach(route -> deadRoutes.add(getRoute(route.getTo(), route.getFrom())));
 
         for (Route route : routes) {
             if (route.getTo().equals(to)) {
@@ -30,26 +28,28 @@ public class RouteCalculator {
                 logger.debug("Correct route: " + routeList);
                 correctRouteList.add(routeList.copy());
                 routeList.clear();
-            } else if (reverseRoutes.contains(route)) {
-                routeList.removeRoute(route);
-                if (routes.size() == 1) { //only have way back
-                    routeList.removeRoute(getReversedRoute(route));
+            } else if (deadRoutes.contains(route)) {
+                if (singleRoute) {
+                    Route reversedRoute = getReversedRoute(route);
+                    routeList.removeRoute(reversedRoute);
+                    deadRoutes.add(reversedRoute);
+                    logger.debug("Dead route: " + route + " and its reversed route " + reversedRoute);
                 }
-                //if previous route are single route, keep going back
-                while (routeList.getLastRoute() != null && routeList.getLastRoute().isSingle()) {
-                    routeList.removeLastRoute();
-                }
-                logger.debug("Dead route: " + route + " RouteList: " + routeList);
-
             } else {
                 routeList.addRoute(route);
+                RouteList routeListCopy = routeList.copy();
                 findRoute(route.getTo(), to, routeList);
+                if (routeList.equals(routeListCopy)) { //no change, means no route found
+                    routeList.removeLastRoute(); //trace back
+                }
             }
         }
     }
 
+    //solution 2, multiple threading
+
     public void printCorrectRouteList() {
-        correctRouteList.stream().sorted().map(routeList -> "Route: " + routeList.print() + ", Total Distance: " + routeList.distance()).forEach(System.out::println);
+        correctRouteList.stream().sorted().map(routeList -> "Route: " + routeList + ", Total Distance: " + routeList.distance()).forEach(System.out::println);
     }
 
     public List<Route> getRoutes(String from) {

@@ -2,11 +2,10 @@ package com.xujie.route;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RouteList implements Comparable<RouteList> {
-
-    private boolean live;
 
     private List<Route> routes = new ArrayList<>();
 
@@ -40,14 +39,6 @@ public class RouteList implements Comparable<RouteList> {
         this.routes.addAll(routeList.getRoutes());
     }
 
-    public boolean isLive() {
-        return live;
-    }
-
-    public void setLive(boolean live) {
-        this.live = live;
-    }
-
     public RouteList copy() {
         RouteList routeList = new RouteList();
         for (Route route : routes) {
@@ -70,17 +61,6 @@ public class RouteList implements Comparable<RouteList> {
 
     @Override
     public String toString() {
-        String routePrint = "";
-        for (int i = 0; i < routes.size(); i++) {
-            Route route = routes.get(i);
-            if (i != 0) routePrint += " | ";
-            routePrint += route.getFrom() + " -> " + route.getTo() + " (" + route.getDistance() + ")";
-        }
-
-        return routePrint;
-    }
-
-    public String print() {
         String s = "";
         for (int i = 0; i < routes.size(); i++) {
             Route route = routes.get(i);
@@ -97,5 +77,18 @@ public class RouteList implements Comparable<RouteList> {
     @Override
     public int compareTo(RouteList o) {
         return this.distance() - o.distance();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RouteList routeList = (RouteList) o;
+        return routes.equals(routeList.routes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(routes);
     }
 }
