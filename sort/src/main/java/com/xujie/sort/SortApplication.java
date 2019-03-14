@@ -6,12 +6,12 @@ public class SortApplication {
 
         Sorter sorter = new Sorter();
         long t = System.currentTimeMillis();
-        System.out.println("before:");
+        System.out.print("before:\t\t");
         sorter.print(array);
 
         sorter.bubbleSort(array);
 
-        System.out.println("after:");
+        System.out.print("after:\t\t");
         sorter.print(array);
         System.out.println("time spent: " + (System.currentTimeMillis() - t));
     }

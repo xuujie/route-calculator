@@ -2,13 +2,14 @@ package com.xujie.sort;
 
 public class Sorter {
 
-    public void bubbleSort(int[] a) {
+    public void bubbleSort(int[] array) {
+        int n = array.length;
         int idx = 0;
-        for (int i = 0; i < a.length -1; i++) {
-            for (int j = 0; j < a.length -1; j++) {
-                if (a[j] > a[j+1]) {
-                    System.out.print("bubbleSort " + ++idx  + "\t\t");
-                    swap(a, j, j+1);
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1; j++) {
+                if (array[j] > array[j + 1]) {
+                    System.out.print(++idx + ":\t\t\t");
+                    swap(array, j, j + 1);
                 }
             }
         }
