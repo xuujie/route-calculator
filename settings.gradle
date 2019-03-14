@@ -3,4 +3,7 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'route-caculator'
+rootProject.name = 'tests'
+
+include "route"
+include "sort"

@@ -1,9 +1,4 @@
-plugins {
-	id 'org.springframework.boot' version '2.1.3.RELEASE'
-	id 'java'
-}
-
-apply plugin: 'io.spring.dependency-management'
+apply plugin: 'java'
 
 group = 'com.xujie.route.search'
 version = '0.0.1-SNAPSHOT'
@@ -14,8 +9,5 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.slf4j:slf4j-api:1.7.25'
-	runtimeOnly 'com.h2database:h2'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
