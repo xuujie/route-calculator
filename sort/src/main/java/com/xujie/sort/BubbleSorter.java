@@ -1,8 +1,14 @@
 package com.xujie.sort;
 
-public class Sorter {
+public class BubbleSorter {
 
-    public void bubbleSort(int[] array) {
+    private int[] array;
+
+    public BubbleSorter(int[] array) {
+        this.array = array;
+    }
+
+    public void sort() {
         int n = array.length;
         int idx = 0;
         for (int i = 0; i < n - 1; i++) {
@@ -14,7 +20,6 @@ public class Sorter {
             }
         }
     }
-
 
     public void swap(int[] array, int i, int j) {
         int t = array[i];
@@ -28,5 +33,13 @@ public class Sorter {
             System.out.print(i + " ");
         }
         System.out.println();
+    }
+
+    public int[] getArray() {
+        return array;
+    }
+
+    public void setArray(int[] array) {
+        this.array = array;
     }
 }
